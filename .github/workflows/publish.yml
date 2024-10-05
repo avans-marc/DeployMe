@@ -1,5 +1,6 @@
 name: deploy
-
+env:
+  APP_SERVICE_NAME: 'marcavans' # Set the name of your app service here
 on:
     # 👇 Trigger the workflow on a push to the main branch.
     push:
@@ -49,10 +50,12 @@ jobs:
           - name: 'Deploy to Azure Web App'
             uses: azure/webapps-deploy@v2
             with:
-                app-name: 'marcavans' # Replace with your Azure Web App name
-                package: ./api # Path to the package to deploy
+                app-name: '${{env.APP_SERVICE_NAME}}' 
+                package: ./api 
 
-
-
+          - uses: azure/appservice-settings@v1
+            with:
+                app-name: '${{env.APP_SERVICE_NAME}}'
+                app-settings-json: '[{ "name": "ConnectionStringAzureSQL", "value": "${{ secrets.AZURE_SQL_DATABASE_APPLICATION_USER }}"]' 
 
                 
