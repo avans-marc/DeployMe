@@ -34,11 +34,13 @@ jobs:
 
           - name: List files in the workspace
             run: ls -R
-
+            
+          - name: Mark migrations bundle as executable
+            run: chmod +x ./migrations/migrations.exe
+            
             # Step to execute the ef migrations
           - name: Execute EF migrations
-            run: |
-                ./migrations/migrations.exe
+            run: ./migrations/migrations.exe
 
             # Step to deploy the code to Azure Web App
           - name: 'Deploy to Azure Web App'
