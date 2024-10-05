@@ -1,5 +1,5 @@
-# DeployMe 
-Een voorbeeld applicatie API die geschikt is voor gebruik op de **gratis** Azure App service & Azure SQL database en gebruik maakt van CI/CD d.m.v. GitHub Actions (inclusief SQL schema migraties).
+# DeployMe
+Een voorbeeld .net applicatie die geschikt is om te hosten op de **gratis** Azure App service & Azure SQL database en gebruik maakt van CI/CD d.m.v. **gratis** GitHub Actions.
 
 Deze applicatie maakt gebruik van
 * .NET Core 8
@@ -14,7 +14,7 @@ Om deze applicatie te ontwikkelen & deployen heb je nodig
 
 ## Stap 1 - Aanmaken Azure Resources
 
-### Een gratis database aanmaken
+### Een gratis Azure SQL server database aanmaken
 Azure biedt een levenslange gratis SQL database met uiteraard limieten. Wanneer je deze wilt activeren ga je naar: https://portal.azure.com/#create/Microsoft.SQLDatabase
 
 Let bij het aanmaken van deze database op:
@@ -29,12 +29,8 @@ Let bij het aanmaken van deze database op:
 Meer informatie over de gratis SQL database op: 
 https://learn.microsoft.com/en-us/azure/azure-sql/database/free-offer?view=azuresql
 
-### Een Azure free app service aanmaken
-Azure biedt ook een gratis App Service met limieten. Deze kun je activeren door naar https://portal.azure.com/#create/Microsoft.WebSite te gaan
-
-Let bij het aanmaken van deze app service op:
-* Linux
-* .NET
+### Een gratis Azure Web App aanmaken
+Azure biedt ook een gratis App Service met limieten. Deze kun je activeren door naar https://portal.azure.com/#create/Microsoft.WebSite te gaan. Maak een Azure App Service aan op Linux en geschikt voor .NET (code, runtime stack).
 
 ## Stap 2 - Configureren Azure SQL database
 Om jouw Azure database geschikt te maken voor migraties vanuit GitHub Actions maken we een SQL user aan die beschikt over `db_owner` rechten. 
@@ -70,7 +66,7 @@ ALTER ROLE [db_datawriter] ADD MEMBER [app_user];
 ALTER ROLE [db_datareader] ADD MEMBER [app_user];
 ```
 
-Indien je wilt controleren of je bovenstaande stappen goed hebt uitgevoerd maak je een nieuwe verbinding met je database server, maar nu met SQL username / password (i.p.v. Azure Universal). Als dit lukt heb je de gebruikersnamen goed geconfigureerd.
+*Opmerking: Indien je wilt controleren of je bovenstaande stappen goed hebt uitgevoerd maak je een nieuwe verbinding met je database server, maar nu met SQL username / password (i.p.v. Azure - Universal with MFA). Als dit lukt heb je de gebruikersnamen goed geconfigureerd.*
 
 ## Stap 3 - Maak service principal credentials voor Azure
 Omdat we GitHub de controle geven over de Azure App Service (voor updates) maken we credentials aan waarmee GitHub actions zichzelf kunnen authenticeren. 
@@ -99,3 +95,6 @@ Via *Settings -> Secrets & Variables -> Actions* kun je nu de volgende secrets c
 | AZURE_SQL_SERVER_NAME  | De naam van jouw Azure SQL server (zonder .database.windows.net)         |
 
 *Opmerking: Wanneer je met meerdere omgevingen werkt kun je ook gebruik maken van 'Environment Secrets'. Je dient dan wel nog de workflow zelf ook aan te passen. Om het simpel te houden gebruiken we nu alleen Repository Secrets en ondersteunt de deploy workflow dus maar één omgeving.*
+
+
+# Lokaal ontwikkelen
