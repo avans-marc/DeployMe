@@ -20,6 +20,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+        
     - name: Restore dependencies
       run: dotnet restore
       
@@ -30,13 +31,19 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Publish
-      run: dotnet publish --no-build --configuration Release --output ./publish
+      run: dotnet publish ./DeployMe.API --output ./publish/api --no-build --configuration Release 
         
     - name: Bundle EF project
       run: dotnet ef migrations bundle --output ./publish/migrations
         
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
+    - name: Upload artifact DeployMe.API
+      uses: actions/upload-artifact@v4
       with:
-          name: dotnet-webapi
-          path: ./publish
+          name: deployme-api
+          path: ./publish/api
+          
+    - name: Upload artifact DeployMe.Infrastructure.Migrations
+      uses: actions/upload-artifact@v4
+      with:
+          name: deployme-migrations
+          path: ./publish/migrations   
