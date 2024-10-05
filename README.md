@@ -82,7 +82,7 @@ az ad sp create-for-rbac --name {app-name} --role contributor --scopes /subscrip
 
 Indien goed gedaan komt er een JSON terug. Bewaar deze JSON.
 
-### Configureer GitHub Workflow
+## Stap 4 - Configureer GitHub Repository Secrets
 GitHub wordt verantwoordelijk voor het migreren van de database schema en het configureren van de verbinding van de App Service met de database. Daarom maken we een aantal secrets aan. Wanneer je met meerdere omgevingen werkt kun je ook gebruik maken van 'Environment Secrets'. Je dient dan wel nog de worflow zelf ook aan te passen. Om het simpel te houden gebruiken we nu alleen Repository Secrets en ondersteunen we dus maar 1 omgeving.
 
 Via *Settings -> Secrets & Variables -> Actions* kun je nu de volgende secrets configureren:
