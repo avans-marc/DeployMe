@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Publish
-      run: dotnet publish ./DeployMe.API --output ./publish/api --no-build --configuration Release 
+      run: dotnet publish ./DeployMe.API --output ./publish/api --configuration Release 
         
     - name: Bundle EF project
       run: dotnet ef migrations bundle --output ./publish/migrations
