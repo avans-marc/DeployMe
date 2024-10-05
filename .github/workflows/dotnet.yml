@@ -20,11 +20,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-        
-    - name: Install dotnet ef
-      run: | 
-        dotnet tool install --global dotnet-ef
-        
+
     - name: Restore dependencies
       run: dotnet restore
       
@@ -41,7 +37,7 @@ jobs:
       run:  |
         dotnet tool install --global dotnet-ef
         dotnet tool restore
-        dotnet ef migrations bundle --output ./publish/migrations
+        dotnet ef migrations bundle --output ./publish/migrations --startup-project ./DeployMe.API --project ./DeployMe.Infrastructure
         
     - name: Upload artifact DeployMe.API
       uses: actions/upload-artifact@v4
