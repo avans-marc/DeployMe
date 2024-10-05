@@ -1,6 +1,5 @@
 name: deploy
-env:
-  APP_SERVICE_NAME: 'marcavans' # Set the name of your app service here
+
 on:
     # 👇 Trigger the workflow on a push to the main branch. Remove if you would only to deploy manually
     push:
@@ -37,7 +36,7 @@ jobs:
           - name: Execute EF migrations
             run: |
                   chmod +x ./migrations/migrations.exe
-                  ./migrations/migrations.exe --connection "${{ secrets.AZURE_SQL_DATABASE_OWNER }}"
+                  ./migrations/migrations.exe --connection "Server=tcp:${{ secrets.AZURE_SQL_SERVER_NAME }}.database.windows.net,1433;Database=${{ secrets.AZURE_SQL_DATABASE_NAME }};User ID=app_user;Password=${{ secrets.AZURE_SQL_APP_USER_PASSWORD }};Trusted_Connection=False;Encrypt=True;"
 
           - uses: azure/login@v1
             with:
@@ -47,12 +46,12 @@ jobs:
           - name: 'Deploy to Azure Web App'
             uses: azure/webapps-deploy@v2
             with:
-                app-name: '${{env.APP_SERVICE_NAME}}' 
+                app-name: '${{secrets.AZURE_APP_SERVICE_NAME}}' 
                 package: ./api 
 
           - uses: azure/appservice-settings@v1
             with:
-                app-name: '${{env.APP_SERVICE_NAME}}'
-                app-settings-json: '[{ "name": "ConnectionStringAzureSQL", "value": "${{ secrets.AZURE_SQL_DATABASE_APPLICATION_USER }}"}]' 
+                app-name: '${{secrets.AZURE_APP_SERVICE_NAME}}'
+                app-settings-json: '[{ "name": "ConnectionStringAzureSQL", "value": "Server=tcp:${{ secrets.AZURE_SQL_SERVER_NAME }}.database.windows.net,1433;Database=${{ secrets.AZURE_SQL_DATABASE_NAME }};User ID=migrator;Password=${{ secrets.AZURE_SQL_MIGRATOR_PASSWORD }};Trusted_Connection=False;Encrypt=True;"}]' 
 
                 
