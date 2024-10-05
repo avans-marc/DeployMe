@@ -30,7 +30,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Publish
-      run: dotnet publish --no-build --configuration Release --output ./publish/webapi
+      run: dotnet publish ./DeployMe.API --output ./publish/api --no-build --configuration Release 
         
     - name: Bundle EF project
       run: dotnet ef migrations bundle --output ./publish/migrations
@@ -38,10 +38,11 @@ jobs:
     - name: Upload artifact DeployMe.API
       uses: actions/upload-artifact@v4
       with:
-          name: deployme-webapi
-          path: ./publish/webapi
+          name: deployme-api
+          path: ./publish/api
+          
     - name: Upload artifact DeployMe.Infrastructure.Migrations
       uses: actions/upload-artifact@v4
       with:
-          name: deployme-webapi
+          name: deployme-migrations
           path: ./publish/migrations   
