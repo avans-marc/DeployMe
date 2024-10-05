@@ -35,12 +35,11 @@ jobs:
           - name: List files in the workspace
             run: ls -R
             
-          - name: Mark migrations bundle as executable
-            run: chmod +x ./migrations/migrations.exe
-            
             # Step to execute the ef migrations
           - name: Execute EF migrations
-            run: ./migrations/migrations.exe
+            run: |
+                  chmod +x ./migrations/migrations.exe
+                  ./migrations/migrations.exe --connection "${{ secrets.AZURE_SQL_DATABASE_OWNER }}"
 
             # Step to deploy the code to Azure Web App
           - name: 'Deploy to Azure Web App'
