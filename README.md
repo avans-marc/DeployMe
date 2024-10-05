@@ -1,6 +1,8 @@
 # DeployMe
 Een voorbeeld .net applicatie die geschikt is om te hosten op de **gratis** Azure App service & Azure SQL database en gebruik maakt van CI/CD d.m.v. **gratis** GitHub Actions.
 
+## Uitleg
+
 Deze applicatie maakt gebruik van
 * .NET Core 8
 * Union architectuur
