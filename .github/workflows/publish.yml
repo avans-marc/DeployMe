@@ -24,12 +24,12 @@ jobs:
       - name: Download api
         uses: actions/download-artifact@v4
         with:
-          name: api
+          name: deployme-api
           path: ./api
       - name: Download migrations
         uses: actions/download-artifact@v4
         with:
-          name: migrations
+          name: deployme-migrations
           path: ./migrations
 
       # Steps to deploy the code go here.
