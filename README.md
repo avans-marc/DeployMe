@@ -72,7 +72,9 @@ ALTER ROLE [db_datareader] ADD MEMBER [app_user];
 
 Indien je wilt controleren of je bovenstaande stappen goed hebt uitgevoerd maak je een nieuwe verbinding met je database server, maar nu met SQL username / password (i.p.v. Azure Universal). Als dit lukt heb je de gebruikersnamen goed geconfigureerd.
 
-## Stap 3 - Maak credentials voor Azure
+## Stap 3 - Maak service principal credentials voor Azure
+Omdat we GitHub de controle geven over de Azure App Service (voor updates) maken we credentials aan waarmee GitHub actions zichzelf kunnen authenticeren. 
+
 Ga naar https://portal.azure.com en open een Cloud Shell (menubalk boven)
 
 Vervang `{subscription-id}`, `{resource-group}` en `{app-name}` met de gegevens van jouw azure app service en voor onderstaande code uit in de shell
