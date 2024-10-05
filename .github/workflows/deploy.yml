@@ -2,7 +2,7 @@ name: deploy
 env:
   APP_SERVICE_NAME: 'marcavans' # Set the name of your app service here
 on:
-    # 👇 Trigger the workflow on a push to the main branch.
+    # 👇 Trigger the workflow on a push to the main branch. Remove if you would only to deploy manually
     push:
         branches: main
 
