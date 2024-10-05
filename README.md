@@ -6,3 +6,7 @@ https://portal.azure.com/#create/Microsoft.SQLDatabase
 `dotnet ef migrations add InitialCreate --startup-project DeployMe.API --project DeployMe.Infrastructure`
 
 Studenten kunnnen de windows azure authenticatie niet gebruiken wellicht
+
+
+-- SCM Basic Auth Publishinh aan
+-- FTP aan

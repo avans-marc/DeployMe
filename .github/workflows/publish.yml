@@ -1,35 +1,47 @@
 name: deploy
 
 on:
-  # 👇 Trigger the workflow on a push to the main branch.
-  push:
-    branches: main
+    # 👇 Trigger the workflow on a push to the main branch.
+    push:
+        branches: main
 
-  # 👇 Allows you to run this workflow manually (for any branch) from the Actions tab.
-  workflow_dispatch:
-
+    # 👇 Allows you to run this workflow manually (for any branch) from the Actions tab.
+    workflow_dispatch:
 
 jobs:
-  # 👇 Call the build workflow to create the artifacts to deploy.
-  build:
-    uses: ./.github/workflows/build.yml
-    secrets: inherit # Pass secrets to the build workflow, if necessary.
+    # 👇 Call the build workflow to create the artifacts to deploy.
+    build:
+        uses: ./.github/workflows/build.yml
+        secrets: inherit # Pass secrets to the build workflow, if necessary.
 
-  deploy:
-     # Only run this deploy job after the build-and-test job completes successfully.
-    needs: build
-    runs-on: ubuntu-latest
-    environment: production # Used for environment-specific variables, secrets, and approvals.
-    steps:
-      - name: Download api
-        uses: actions/download-artifact@v4
-        with:
-          name: deployme-api
-          path: ./api
-      - name: Download migrations
-        uses: actions/download-artifact@v4
-        with:
-          name: deployme-migrations
-          path: ./migrations
+    deploy:
+         # Only run this deploy job after the build-and-test job completes successfully.
+        needs: build
+        runs-on: ubuntu-latest
+        environment: production # Used for environment-specific variables, secrets, and approvals.
+        steps:
+          - name: Download api
+            uses: actions/download-artifact@v4
+            with:
+                name: deployme-api
+                path: ./api
+         
+          - name: Download migrations
+            uses: actions/download-artifact@v4
+            with:
+                name: deployme-migrations
+                path: ./migrations
 
-      # Steps to deploy the code go here.
+            # Step to execute the ef migrations
+          - name: Execute EF migrations
+            run: |
+                cd ./migrations
+                migrations.exe
+
+            # Step to deploy the code to Azure Web App
+          - name: 'Deploy to Azure Web App'
+            uses: azure/webapps-deploy@v2
+            with:
+                app-name: 'marcavans.azurewebsites.net' # Replace with your Azure Web App name
+                publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} # Ensure this secret is added to your repository
+                package: ./api # Path to the package to deploy
