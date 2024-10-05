@@ -10,3 +10,8 @@ Studenten kunnnen de windows azure authenticatie niet gebruiken wellicht
 
 -- SCM Basic Auth Publishinh aan
 -- FTP aan
+
+
+
+-- create user login on master
+-- create user on database
