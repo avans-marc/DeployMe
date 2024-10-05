@@ -1,13 +1,24 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: build
+
+env:
+  artifactName: buildArtifact
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: main # Run workflow on PRs to the main branch.
+
+  # 👇 Run workflow on pushes to any branch, except the main branch.
+  push:
+    branches-ignore: main
+
+  # Allows you to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+
+  # 👇 Allows this workflow to be called from the deployment workflow.
+  workflow_call:
 
 jobs:
   build:
@@ -29,23 +40,25 @@ jobs:
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      
+    
+    # The default flag --no-build is removed since it causes errors in GitHub workflows
     - name: Publish
       run: dotnet publish ./DeployMe.API --output ./publish/api --configuration Release 
-        
+      
+    # Install the dotnet ef tools and bundle the migrations into a self-contained executable
     - name: Bundle EF project
       run:  |
         dotnet tool install --global dotnet-ef
         dotnet tool restore
         dotnet ef migrations bundle --output ./publish/migrations --startup-project ./DeployMe.API --project ./DeployMe.Infrastructure
         
-    - name: Upload artifact DeployMe.API
+    - name: Upload artifact API
       uses: actions/upload-artifact@v4
       with:
           name: deployme-api
           path: ./publish/api
           
-    - name: Upload artifact DeployMe.Infrastructure.Migrations
+    - name: Upload artifact Migrations
       uses: actions/upload-artifact@v4
       with:
           name: deployme-migrations

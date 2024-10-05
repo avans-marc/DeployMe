@@ -1,0 +1,33 @@
+name: deploy
+
+on:
+  # 👇 Trigger the workflow on a push to the main branch.
+  push:
+    branches: main
+
+  # 👇 Allows you to run this workflow manually (for any branch) from the Actions tab.
+  workflow_dispatch:
+
+
+jobs:
+  # 👇 Call the build workflow to create the artifacts to deploy.
+  build:
+    uses: ./.github/workflows/build.yml
+    secrets: inherit # Pass secrets to the build workflow, if necessary.
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production # Used for environment-specific variables, secrets, and approvals.
+    steps:
+      - name: Download api
+        uses: actions/download-artifact@v4
+        with:
+          name: api
+          path: ./api
+      - name: Download migrations
+        uses: actions/download-artifact@v4
+        with:
+          name: migrations
+          path: ./migrations
+
+      # Steps to deploy the code go here.
