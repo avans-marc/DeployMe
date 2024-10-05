@@ -14,7 +14,7 @@ Om deze applicatie te ontwikkelen & deployen heb je nodig
 
 ## Stap 1 - Aanmaken Azure Resources
 
-### Een gratis Azure SQL server database aanmaken
+### Een gratis Azure SQL database aanmaken
 Azure biedt een levenslange gratis SQL database met uiteraard limieten. Wanneer je deze wilt activeren ga je naar: https://portal.azure.com/#create/Microsoft.SQLDatabase
 
 Let bij het aanmaken van deze database op:
@@ -26,7 +26,7 @@ Let bij het aanmaken van deze database op:
 * Noteer je SQL administrator username & password (niet vergeten)
 
 
-Meer informatie over de gratis SQL database op: 
+Meer informatie over de gratis Azure SQL database op: 
 https://learn.microsoft.com/en-us/azure/azure-sql/database/free-offer?view=azuresql
 
 ### Een gratis Azure Web App aanmaken
