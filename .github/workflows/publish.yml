@@ -16,6 +16,8 @@ jobs:
     secrets: inherit # Pass secrets to the build workflow, if necessary.
 
   deploy:
+     # Only run this deploy job after the build-and-test job completes successfully.
+    needs: build
     runs-on: ubuntu-latest
     environment: production # Used for environment-specific variables, secrets, and approvals.
     steps:
