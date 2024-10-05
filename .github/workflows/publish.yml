@@ -32,9 +32,6 @@ jobs:
             with:
                 name: deployme-migrations
                 path: ./migrations
-
-          - name: List files in the workspace
-            run: ls -R
             
             # Step to execute the ef migrations
           - name: Execute EF migrations
@@ -56,6 +53,6 @@ jobs:
           - uses: azure/appservice-settings@v1
             with:
                 app-name: '${{env.APP_SERVICE_NAME}}'
-                app-settings-json: '[{ "name": "ConnectionStringAzureSQL", "value": "${{ secrets.AZURE_SQL_DATABASE_APPLICATION_USER }}"]' 
+                app-settings-json: '[{ "name": "ConnectionStringAzureSQL", "value": "${{ secrets.AZURE_SQL_DATABASE_APPLICATION_USER }}"}]' 
 
                 
