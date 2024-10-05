@@ -50,7 +50,7 @@ jobs:
       run:  |
         dotnet tool install --global dotnet-ef
         dotnet tool restore
-        dotnet ef migrations bundle --output ./publish/migrations/migrations.exe --startup-project ./DeployMe.API --project ./DeployMe.Infrastructure --self-contained
+        dotnet ef migrations bundle --output ./publish/migrations/migrations.exe --startup-project ./DeployMe.API --project ./DeployMe.Infrastructure --self-contained dotnet ef migrations bundle --self-contained -r linux-x64
         
     - name: Upload artifact API
       uses: actions/upload-artifact@v4
