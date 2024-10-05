@@ -21,6 +21,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
         
+    - name: Install dotnet ef
+      run: | 
+        dotnet tool install --global dotnet-ef
+        
     - name: Restore dependencies
       run: dotnet restore
       
