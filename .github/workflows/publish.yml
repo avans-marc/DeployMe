@@ -32,11 +32,13 @@ jobs:
                 name: deployme-migrations
                 path: ./migrations
 
+          - name: List files in the workspace
+            run: ls -R
+
             # Step to execute the ef migrations
           - name: Execute EF migrations
             run: |
-                cd ./migrations
-                migrations.exe
+                ./migrations/migrations.exe
 
             # Step to deploy the code to Azure Web App
           - name: 'Deploy to Azure Web App'
