@@ -38,7 +38,10 @@ jobs:
       run: dotnet publish ./DeployMe.API --output ./publish/api --configuration Release 
         
     - name: Bundle EF project
-      run: dotnet ef migrations bundle --output ./publish/migrations
+      run:  |
+        dotnet tool install --global dotnet-ef
+        dotnet tool restore
+        dotnet ef migrations bundle --output ./publish/migrations
         
     - name: Upload artifact DeployMe.API
       uses: actions/upload-artifact@v4
