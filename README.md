@@ -3,7 +3,7 @@ Deze applicatie is ontworpen om een betrouwbaar en veilig voorbeeld te bieden. H
 
 De applicatie is een eenvoudige .NET web API die gebruik maakt van een SQL database met behulp van Entity Framework inclusief migraties. 
 
-Hieronder staat de werking beschreven. Hoe je je Azure omgeving en GitHub repository configureert lees je in deze [instructie](SETUP.md).
+Hieronder staat de werking beschreven. Hoe je je Azure omgeving en GitHub repository configureert lees je in deze [instructie](./SETUP.md).
 
 ## Werking
 Er is een afzondwerlijke build en deploy stap, en afhankelijk van de branch waarop code wordt gepushed worden de volgende workflows gestart.
@@ -48,4 +48,4 @@ Met een schema kun je meerdere EF core applicaties afzonderlijk gebruik laten ma
 Lees meer over SQL schemas en hoe je deze veilig kunt gebruiken met afzonderlijke applicaties (en SQL users) [hier](https://www.sqlshack.com/a-walkthrough-of-sql-schema/).
 
 ## Azure & GitHub configureren
-Lees de [instructie](SETUP.md) hoe je jouw Azure Resources en GitHub repository configureert.
+Lees de [instructie](./SETUP.md) hoe je jouw Azure Resources en GitHub repository configureert.
