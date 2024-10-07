@@ -26,7 +26,7 @@ Meer informatie over de gratis Azure SQL database op:
 https://learn.microsoft.com/en-us/azure/azure-sql/database/free-offer?view=azuresql
 
 ### Een gratis Azure Web App aanmaken
-Azure biedt ook een gratis App Service met limieten. Deze kun je activeren door naar https://portal.azure.com/#create/Microsoft.WebSite te gaan. Maak een Azure App Service aan op Linux en geschikt voor .NET (code, runtime stack).
+Azure biedt ook een gratis App Service waar je een webapplicatie op kunt hosten. Deze kun je activeren door naar https://portal.azure.com/#create/Microsoft.WebSite te gaan. Maak een Azure App Service aan op Linux en geschikt voor .NET (code, runtime stack).
 
 ## Stap 2 - Configureren Azure SQL database
 Om jouw Azure database geschikt te maken voor migraties vanuit GitHub Actions maken we een SQL user aan die beschikt over `db_owner` rechten. 
@@ -35,7 +35,7 @@ Om jouw Azure database geschikt te maken voor migraties vanuit GitHub Actions ma
 2. Verbind met jouw database server ( jouw_gekozen_naam .database.windows.net) en maak gebruik van Azure - Universal with MFA. Zodat je met je Azure account deze database kunt beheren.
 
 
-We gaan 2 logins aanmaken:
+Je gaat 2 SQL logins & users aanmaken:
 * migrator: verantwoordelijk voor het beheren van de SQL database schema
 * app_user: de login die de applicatie kan gebruiken om gegevens op te halen/weg te schrijven
 
@@ -69,17 +69,17 @@ Omdat we GitHub de controle geven over de Azure App Service (voor updates) maken
 
 Ga naar https://portal.azure.com en open een Cloud Shell (menubalk boven)
 
-Vervang `{subscription-id}`, `{resource-group}` en `{app-name}` met de gegevens van jouw azure app service en voor onderstaande code uit in de shell
+Vervang `{subscription-id}`, `{resource-group}` en `{app-name}` met de gegevens van jouw Azure App Service en voer onderstaande code uit in de shell
 ```
 az ad sp create-for-rbac --name {app-name} --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} --sdk-auth
 ```
 
-Indien goed gedaan komt er een JSON terug. Bewaar deze JSON.
+Wanneer het commando goed is uitgevoerd komt er een JSON terug. Bewaar deze JSON, want die heb je nodig om je GitHub repository te koppelen aan je Azure App Service.
 
 ## Stap 4 - Configureer GitHub Repository Secrets
-GitHub wordt verantwoordelijk voor het migreren van de database schema en het configureren van de verbinding van de App Service met de database. Daarom maken we een aantal secrets aan. 
+GitHub wordt verantwoordelijk voor het migreren van de database schema en het configureren van de verbinding van de App Service met de Azure SQL database. Daarom maken we een aantal secrets aan. 
 
-Via *Settings -> Secrets & Variables -> Actions* kun je nu de volgende secrets configureren:
+Via *Settings -> Secrets & Variables -> Actions* kun je de volgende secrets configureren:
 
 | Name      | Value   |
 |-----------|--------------|
@@ -90,4 +90,4 @@ Via *Settings -> Secrets & Variables -> Actions* kun je nu de volgende secrets c
 | AZURE_SQL_MIGRATOR_PASSWORD  | Het wachtwoord dat je in Stap 2 hebt ingesteld i.p.v. `<your_sql_migrator_password>`     |
 | AZURE_SQL_SERVER_NAME  | De naam van jouw Azure SQL server (zonder .database.windows.net)         |
 
-*Opmerking: Wanneer je met meerdere omgevingen werkt kun je ook gebruik maken van 'Environment Secrets'. Je dient dan wel nog de workflow zelf ook aan te passen. Om het simpel te houden gebruiken we nu alleen Repository Secrets en ondersteunt de deploy workflow dus maar één omgeving.*
+*Opmerking: Wanneer je met meerdere omgevingen werkt kun je ook gebruik maken van 'Environment Secrets'. Je dient dan wel ook de workflow zelf aan te passen. Om het simpel te houden gebruiken we nu alleen Repository Secrets en ondersteunt de deploy workflow dus maar één omgeving.*
