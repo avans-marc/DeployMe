@@ -12,7 +12,7 @@ jobs:
     # 👇 Call the build workflow to create the artifacts to deploy.
     build:
         uses: ./.github/workflows/build.yml
-        secrets: inherit # Pass secrets to the build workflow, if necessary.
+        secrets: inherit # Pass secrets to the build workflow
 
     deploy:
          # Only run this deploy job after the build-and-test job completes successfully.
