@@ -7,7 +7,10 @@ namespace DeployMe.Infrastructure
 
     public class StudentDbContext : DbContext
     {
-        public const string SQL_SCHEMA = "DeployMe";
+        // Specifies the SQL schema where the tables will be added.
+        // The schema is hardcoded within the context, making it more static 
+        // compared to configuring it through an external file.
+        public const string SqlSchema = "DeployMe";
 
         public StudentDbContext(DbContextOptions<StudentDbContext> options)
             : base(options)
@@ -18,13 +21,8 @@ namespace DeployMe.Infrastructure
 
         /// <summary>
         /// Use this code if you would like to connect this context to a specific SQL schema
-        /// Create the schema first with: CREATE SCHEMA [name_of_scheme];
         /// </summary>
         /// <param name="modelBuilder"></param>
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
-            modelBuilder.HasDefaultSchema(SQL_SCHEMA);
-        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.HasDefaultSchema(SqlSchema);
     }
 }

@@ -9,7 +9,7 @@ var connection = builder.Configuration.GetValue<string>("ConnectionStringAzureSQ
 builder.Services.AddDbContext<StudentDbContext>(options =>
     options.UseSqlServer(connection, sqlOptions =>
     {
-        sqlOptions.MigrationsHistoryTable("EFMigrationHistory", StudentDbContext.SQL_SCHEMA);
+        sqlOptions.MigrationsHistoryTable("EFMigrationHistory", StudentDbContext.SqlSchema);
     }));
 
 
